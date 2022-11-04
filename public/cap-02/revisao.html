@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
 
        let connection = null;
 
-       const openRequest = window.indexedDB.open('db-dm', 1);
+       const openRequest = window.indexedDB.open('novo__banco', 1);
 
        openRequest.onupgradeneeded = e => {
            console.log('Criou ou atualizou o banco');
@@ -42,7 +42,7 @@
        function adiciona() {
            const transaction = connection.transaction([clazz], 'readwrite');
            const store = transaction.objectStore(clazz);
-           const person = new Person('Flávio');
+           const person = new Person('Daniel');
            const request = store.add(person);
 
            request.onsuccess = e => {
