@@ -11,6 +11,7 @@ export class ActiveRecord {
         mapper.converter
       );
       mapper.clazz.prototype.save = save;
+      mapper.clazz.find = find;
     });
   }
   async init() {
@@ -37,6 +38,33 @@ function save() {
         reject( `Não foi possível perscistir o objeto na store ${storeName}`);
       }
   })
+}
+
+function find() {
+  return new Promise((resolve, reject) => {
+    const storeName = this.name;
+    const store = connection
+      .transaction([storeName], 'readwrite')
+      .objectStore(storeName);
+    const cursor = store.openCursor();
+    const converter = stores.get(storeName);
+    const list = [];
+
+    cursor.onsuccess = e => {
+      const current = e.target.result;
+      if(current) {
+        const value = current.value;
+        list.push(converter(value));
+        current.continue();
+      } else {
+        resolve(list);
+      }
+    };
+    cursor.onerror = e => {
+      console.log(e.target.error);
+      reject(`Não foi possível listar a store ${storeName}`);
+    }
+  });
 }
 
 function createConnection(dbName, dbVersion, stores) {

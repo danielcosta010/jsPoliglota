@@ -24,4 +24,9 @@ import { ActiveRecord } from "./infra/active-record.js";
   const animal = new Animal('Coelho Branco');
   await animal.save();
 
+  const people = await Person.find();
+  console.log(people);
+  const animals = await Animal.find();
+  console.log(animals);
+
 })();
