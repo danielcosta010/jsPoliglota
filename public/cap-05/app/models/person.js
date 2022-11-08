@@ -6,5 +6,15 @@ export class Person {
 
     getFullName() {
         return `${this.name} ${this.surname}`;
+        // console.time('getFullName');
+        // console.timeEnd('getFullName')
+        // return fullName;
+    }
+
+    speak(text) {
+        return`${this.name} esta falando... ${text}`;
+        // console.time('speak');
+        // console.timeEnd('speak');
+        // return phrase;
     }
 }
